@@ -1,4 +1,3 @@
-
 // Ejemplo: renderMovies([{ title: "Spider-Man", release_date: "2019-06-30", poster_path: "/rjbNpRMoVvqHmhmksbokcyCr7wn.jpg" }])
 // Traducir las funciones de usar thens a usar async/await
 // Crear función para que no nos gastemos la cantidad de requests demasiado rapido
@@ -9,22 +8,38 @@
 // The Movie Database API: https://developers.themoviedb.org/3/getting-started/introduction
 const apiKey = 'b89fc45c2067cbd33560270639722eae';
 
-function getMovie(id) {
+async function getMovie(id) {
     const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`;
-    return fetch(url).then(response => response.json());
+    // return fetch(url).then(response => response.json());
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
 }
 
-function getPopularMovies() {
+async function getPopularMovies() {
     const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`;
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => data.results);
+    // return fetch(url)
+    //   .then(response => response.json())
+    //   .then(data => data.results);
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.results;
 }
 
-function getTopMoviesIds(n = 3) {
-    return getPopularMovies().then(popularMovies =>
-        popularMovies.slice(0, n).map(movie => movie.id)
-    );
+async function getTopMoviesIds(n = 3) {
+    // return getPopularMovies().then(popularMovies =>
+    //    popularMovies.slice(0, n).map(movie => movie.id)
+    //  );
+
+    // try {
+    //     const popularMovies = await getPopularMovies();
+    // } catch (e) {
+    //     console.log(e.message);
+    // }
+
+    const popularMovies = await getPopularMovies();
+    const ids = popularMovies.slice(0, n).map(movie => movie.id);
+    return ids;
 }
 
 function renderMovies(movies) {
@@ -43,17 +58,32 @@ function renderMovies(movies) {
     });
 }
 
-function getTopMoviesInSequence() {
+async function getTopMoviesInSequence() {
+    const ids = await getTopMoviesIds();
+    const movies = [];
 
-    return [];
+    for (const id of ids) {
+        const movie = await getMovie(id);
+        movies.push(movie);
+    }
+
+    return movies;
 }
 
-function getTopMoviesInParallel() {
-    return [];
+async function getTopMoviesInParallel() {
+    const ids = await getTopMoviesIds();
+    const moviePromises = ids.map(id => getMovie(id));
+
+    const movies = await Promise.all(moviePromises);    // Si alguna promesa devuelve error, todo el objeto lanza error
+    return movies;
 }
 
 async function getFastestTopMovie() {
-    return {};
+    const ids = await getTopMoviesIds();
+    const moviePromises = ids.map(id => getMovie(id));
+
+    const movie = await Promise.race(moviePromises);
+    return movie;
 }
 
 document.getElementById('sequence').onclick = async function () {
