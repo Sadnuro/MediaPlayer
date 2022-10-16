@@ -11,7 +11,7 @@ const player = new MediaPlayer({
     media: video, 
     plugins: [
         new AutoPlay(),
-        new AutoPause( {threshold: 0.15} ),
+        new AutoPause( {threshold: 0.15, onChangeTab: true} ),
     ] 
 });
 playPauseBtn.onclick = () => player.togglePlay();
