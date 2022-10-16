@@ -1,6 +1,7 @@
 /** Objetivo: Si nos equivocamos al escribir una propiedad, 
  * el proxy debe sugerir la opcion correcta */
 
+
 const target = {
     red: 'Rojo',
     green: 'Verde',
