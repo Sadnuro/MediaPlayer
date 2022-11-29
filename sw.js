@@ -31,14 +31,14 @@ async function precache() {
      */
     const cache = await caches.open(VERSION);
     cache.addAll( [
-        '/',            // Raiz del sitio (aunque devuelva /index.html)
-        '/index.html',
-        '/src/index.js',
-        '/src/MediaPlayer.js',
-        '/src/plugins/AutoPlay.js',
-        '/src/plugins/AutoPause.js',
-        '/pages/index.css',
-        '/assets/BigBuckBunny.mp4',
+        // '/',            // Raiz del sitio (aunque devuelva /index.html)
+        // '/index.html',
+        // '/src/index.js',
+        // '/src/MediaPlayer.js',
+        // '/src/plugins/AutoPlay.js',
+        // '/src/plugins/AutoPause.js',
+        // '/pages/index.css',
+        // '/assets/BigBuckBunny.mp4',
     ])
 }
 
