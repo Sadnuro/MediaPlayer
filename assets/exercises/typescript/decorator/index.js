@@ -1,3 +1,8 @@
+/**
+ * Open Closed Principle
+ * Los Objetos (Clases, Modulos, Funciones, etc) deben estar cerradas
+ * para modificacion y abiertas para extensión
+ */
 var Field = /** @class */ (function () {
     function Field(input) {
         var _this = this;

@@ -1,6 +1,7 @@
 import MediaPlayer from "./MediaPlayer";
 import AutoPlay from "./plugins/AutoPlay";
 import AutoPause from "./plugins/AutoPause";
+import AdsPlugin from "./plugins/Ads/AdsPlugin";
 
 const video = document.querySelector("video") as HTMLMediaElement;
 // https://bobbyhadz.com/blog/typescript-type-htmlelement-null-not-assignable-to-type
@@ -13,6 +14,7 @@ const player = new MediaPlayer({
     plugins: [
         new AutoPlay(),
         new AutoPause( {threshold: 0.15, onChangeTab: true} ),
+        new AdsPlugin()
     ] 
 });
 playPauseBtn.onclick = () => player.togglePlay();
